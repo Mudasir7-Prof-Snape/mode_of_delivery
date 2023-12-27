@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" accept-charset="utf-8">
+        <label for="age">Age</label><br>
+        <input id="age" name="age" type="number" placeholder="Must be 1-4"><br>
+        <label for="obs">OB-Score</label><br>
+        <input id="obs" name="obs" type="number" placeholder="Must be 1-4"><br>
+        <label for="bmi">BMI</label><br>
+        <input id="bmi" name="bmi" type="number" placeholder="Must be 1-4"><br>
+        <label for="cons">Consistency</label><br>
+        <input id="cons" name="cons" type="number" placeholder="Must be 1-4"><br>
+        <label for="pos">Position</label><br>
+        <input id="pos" name="pos" type="number" placeholder="Must be 1-4"><br>
+        <label for="eff">Effacement</label><br>
+        <input id="eff" name="eff" type="number" placeholder="Must be 1-4"><br>
+        <label for="dial">Dialation</label><br>
+        <input id="dial" name="dial" type="number" placeholder="Must be 1-4"><br>
+        <label for="stat">Station</label><br>
+        <input id="stat" name="stat" type="number" placeholder="Must be 1-4"><br>
+        <label for="bis">Bishop Score</label><br>
+        <input id="bis" name="bis" type="number" placeholder="Must be 1-4"><br>
+        <label for="cervl">Cerv Length</label><br>
+        <input id="cervl" name="cervl" type="number" placeholder="Must be 1-4"><br>
+        <label for="cervw">Cerv width</label><br>
+        <input id="cervw" name="cervw" type="number" placeholder="Must be 1-4"><br>
+        <label for="induc">Induction</label><br>
+        <input id="induc" name="induc" type="number" placeholder="Must be 1-4">
+        <button onclick='send_data()'>submit</button>
+    </form>
+    <br>
+    <h3><span id="prediction"></span></h3>
+
+    <script>
+        function handler(event){
+            event.preventDefault();
+        }
+        function send_data(){
+            document.querySelector('form').addEventListener("submit",handler);
+            var fd=new FormData(document.querySelector('form'));
+            var req=new XMLHttpRequest();
+            req.open('POST','/predict', true);
+            document.getElementById("prediction").innerHTML="Wait predicting mode.....!"
+            req.onreadystatechange=function(){
+                if(req.readyState==XMLHttpRequest.DONE){
+                    document.getElementById('prediction').innerHTML="Prediction : "+req.responseText;
+                }
+            };
+            req.onload=function(){};
+            req.send(fd);
+        }
+    </script>
+</body>
+</html>
